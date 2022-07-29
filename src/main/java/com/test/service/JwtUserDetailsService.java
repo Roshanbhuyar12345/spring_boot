@@ -9,14 +9,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.test.entity.UserLogin;
+import com.test.Repository.*;
+import com.test.dto.UserDto;
+import com.test.entity.User;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private UserLogin userLogin;
+	private UserLoginRepo userLoginRepo;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -24,12 +25,21 @@ public class JwtUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	
-		UserLogin login= new UserLogin();
+		User user= this.userLoginRepo.findByUsername(username);
 		
-		if(login == null) {
-			throw new UserPrincipalNotFoundException("User Not Found With User_Name"+username);
+		if(user==null) {
+			throw new UsernameNotFoundException("User not found");
 		}
-       return new org.springframework.security.core.userdetails.UserDetails(login.getUser_Name(),login.getPassword(),new ArrayList<>());
+		
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				new ArrayList<>());
+	}
+	
+	public User save(UserDto user) {
+		User ulogin=new User();
+		ulogin.setUsername(user.getUser_Name());
+		ulogin.setPassword(passwordEncoder.encode(user.getPassword()));
+		return userLoginRepo.save(ulogin);
 		
 	}
 
