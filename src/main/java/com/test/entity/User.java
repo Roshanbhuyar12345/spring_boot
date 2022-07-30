@@ -1,7 +1,9 @@
 package com.test.entity;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "User_login_datail")
-public class User implements UserDetails {
+@Table(name = "User_login_detail")
+public class User  {
 	/**
 	 * 
 	 */
@@ -23,10 +27,25 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "user_name", unique = true)
-	private String username;
 	
+	@Column(name = "user_name", unique = true, nullable = true)
+	private String username;
+  
+	@Column(nullable = true)
 	private String password;
+    
+	@Column(name = "created_By")
+	@CreationTimestamp
+	private Date createdBy;
+	
+	@Column(name = "updeted_By")
+	@UpdateTimestamp
+	private Date updatedBy;
+    
+	@Column(name = "is_active")
+	private boolean isActive=true;
+	
+	
 
 	public User() {
 		super();
@@ -34,6 +53,54 @@ public class User implements UserDetails {
 	}
 
 	
+
+	public User(int id, String username, String password, Date createdBy, Date updatedBy, boolean isActive) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
+		this.isActive = isActive;
+	}
+
+
+
+	public Date getCreatedBy() {
+		return createdBy;
+	}
+
+
+
+	public void setCreatedBy(Date createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
+
+	public Date getUpdatedBy() {
+		return updatedBy;
+	}
+
+
+
+	public void setUpdatedBy(Date updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -56,45 +123,19 @@ public class User implements UserDetails {
 		this.username = username;
 	}
 
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "UserLogin [id=" + id + ", user_Name=" + username + ", password=" + password + "]";
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return new ArrayList<GrantedAuthority>();
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.username;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdBy=" + createdBy
+				+ ", updatedBy=" + updatedBy + ", isActive=" + isActive + "]";
 	}
 
 	

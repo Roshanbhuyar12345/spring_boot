@@ -6,7 +6,7 @@ public class JwtRequest implements Serializable{
 
 	private static final long serialVersionUID = 5926468583005150707L;
 	
-	private String user_Name;
+	private String username;
 	private String password;
 	
 	public JwtRequest() {
@@ -14,17 +14,17 @@ public class JwtRequest implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public JwtRequest(String user_Name, String password) {
+	public JwtRequest(String username, String password) {
 		super();
-		this.user_Name = user_Name;
+		this.username = username;
 		this.password = password;
 	}
 	
-	public String getUser_Name() {
-		return user_Name;
+	public String getUsername() {
+		return username;
 	}
-	public void setUser_Name(String user_Name) {
-		this.user_Name = user_Name;
+	public void setUsename(String user_Name) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

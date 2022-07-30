@@ -37,8 +37,9 @@ public class JwtUserDetailsService implements UserDetailsService{
 	
 	public User save(UserDto user) {
 		User ulogin=new User();
-		ulogin.setUsername(user.getUser_Name());
+		ulogin.setUsername(user.getUsername());
 		ulogin.setPassword(passwordEncoder.encode(user.getPassword()));
+		System.out.println(ulogin.toString());
 		return userLoginRepo.save(ulogin);
 		
 	}
