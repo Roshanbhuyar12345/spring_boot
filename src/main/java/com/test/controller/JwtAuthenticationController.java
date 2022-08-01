@@ -28,79 +28,69 @@ import com.test.service.LoggerEntityService;
 
 @RestController
 public class JwtAuthenticationController {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private jwtTokenUtil jwtTokenUtil;
-	
+
 	@Autowired
 	private JwtUserDetailsService userdetailsService;
-	
+
 	@Autowired
 	private UserLoginRepo userRepo;
-	
+
 	@Autowired
 	private LoggerEntityService loggerEntityService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	@RequestMapping(value = "/authenticate",method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
+
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		try {
-			
+			System.out.println("Hey Spring !!");
+
 			User user = userRepo.findByUsername(authenticationRequest.getUsername());
-			// convert the password to hash
-			String passwordFromPayload = passwordEncoder.encode(user.getPassword());
-			
-			// compare the username and the hash of the passoword
-			if(user.getPassword().toString() == passwordFromPayload) {
-				 
-			}
-			else {
+
+			if (userdetailsService.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {
+
+				final UserDetails userDetails = userdetailsService
+						.loadUserByUsername(authenticationRequest.getUsername());
+				final User user1 = userRepo.findByUsername(authenticationRequest.getUsername());
+
+				final String token = this.jwtTokenUtil.generateToken(userDetails);
+
+				LoggerDto loggerDto = new LoggerDto();
+				loggerDto.setToken(token);
+
+				Calendar calendar = Calendar.getInstance();
+				calendar.add(Calendar.HOUR_OF_DAY, 5);
+				loggerDto.setExpireAt(calendar.getTime());
+
+				this.loggerEntityService.createLogger(loggerDto, user1.getId());
+
+				return ResponseEntity.ok(new JwtResponce(token));
+			} else {
 				throw new Exception("Invalid usename or password.");
 			}
+
+		} catch (Exception e) {
+			System.out.printf("Invalid usename or password ", e);
+
 		}
-		catch (Exception e) {
-			// TODO: handle exception
-			System.out.printf("Invalid usename or password", e);
-		}
-		
-		
-		final UserDetails userDetails=userdetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final User user = userRepo.findByUsername(authenticationRequest.getUsername());
-		
-		System.out.println("ASDASHDASDNASD : " +userDetails.toString());
-		
-		final String token=this.jwtTokenUtil.generateToken(userDetails);
-		
-		
-		LoggerDto loggerDto=new LoggerDto();
-		loggerDto.setToken(token);
-		
-		Calendar calendar=Calendar.getInstance();
-		calendar.add(Calendar.HOUR_OF_DAY, 5);
-		loggerDto.setExpireAt(calendar.getTime());
-		
-		this.loggerEntityService.createLogger(loggerDto, user.getId());
-		
-		return ResponseEntity.ok(new JwtResponce(token) );
-		
+		return ResponseEntity.ok("Invalid usename or password");
+
 	}
 	
 	
-	@RequestMapping(value = "/register",method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception{
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception {
 		System.out.println(userDto.toString());
-		return  ResponseEntity.ok(userdetailsService.save(userDto));
+		return ResponseEntity.ok(userdetailsService.save(userDto));
 	}
-	
-	 
-	
-	
-	
-	
+
 }

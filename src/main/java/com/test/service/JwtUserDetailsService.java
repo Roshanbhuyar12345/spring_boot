@@ -34,12 +34,18 @@ public class JwtUserDetailsService implements UserDetailsService{
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				new ArrayList<>());
 	}
+	//for compaire password
+	public Boolean comparePassword(String password, String hashPassword) {
+
+		return passwordEncoder.matches(password, hashPassword);
+
+	}
 	
 	public User save(UserDto user) {
 		User ulogin=new User();
 		ulogin.setUsername(user.getUsername());
-		ulogin.setPassword(passwordEncoder.encode(user.getPassword()));
-		System.out.println(ulogin.toString());
+		ulogin.setPassword(passwordEncoder.encode(user.getPassword().toString().trim()));
+		//System.out.println(ulogin.getPassword());
 		return userLoginRepo.save(ulogin);
 		
 	}
