@@ -39,7 +39,7 @@ public class JwtUserDetailsService implements UserDetailsService{
 
 		return passwordEncoder.matches(password, hashPassword);
 
-	}
+	}   
 	
 	public User save(UserDto user) {
 		User ulogin=new User();
@@ -49,5 +49,6 @@ public class JwtUserDetailsService implements UserDetailsService{
 		return userLoginRepo.save(ulogin);
 		
 	}
+//
 
 }

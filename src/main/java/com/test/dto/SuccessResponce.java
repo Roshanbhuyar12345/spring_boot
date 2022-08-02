@@ -7,6 +7,14 @@ public class SuccessResponce {
 	private String msgkey;
 	
 	private Object data;
+	
+	
+
+	public SuccessResponce(String massage, String msgkey) {
+		super();
+		this.massage = massage;
+		this.msgkey = msgkey;
+	}
 
 	public SuccessResponce(String massage, String msgkey, Object data) {
 		super();

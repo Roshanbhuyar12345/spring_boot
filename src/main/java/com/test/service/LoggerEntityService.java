@@ -24,5 +24,19 @@ public class LoggerEntityService {
 		
 	}
 	
+	//logout user
+	public void LogoutUser(String token) {
+		
+		System.out.println(token);
+		
+		final String userToken=token.substring(7);
+		
+		
+		this.loggerRepo.removeByToken(userToken);
+	   
+	    
+		
+	}
+	
 
 }

@@ -13,8 +13,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "logger")
+@Where(clause = "is_active=true")
+@SQLDelete(sql = "UPDATE logger SET is_active=false WHERE id=?")
 public class LoggerEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +32,7 @@ public class LoggerEntity {
 	@CreationTimestamp
 	private Date createdAt;
 	
+	@UpdateTimestamp
 	private Date expireAt;
 	
 	private boolean isActive=true;
