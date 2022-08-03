@@ -1,4 +1,4 @@
-package com.test.controller;
+ package com.test.controller;
 
 
 import java.util.Calendar;
@@ -103,6 +103,8 @@ public class JwtAuthenticationController {
 		return ResponseEntity.ok(userdetailsService.save(userDto));
 	}
 	
+	
+	
 	@Transactional
 	@RequestMapping(value = "/logout",method = RequestMethod.GET)
 	
@@ -111,7 +113,7 @@ public class JwtAuthenticationController {
 		this.loggerEntityService.LogoutUser(token);
 		
 		
-			return ResponseEntity.ok("Logout Sucessfully");
+			return ResponseEntity.ok(new ErrorDetail(new Date(), "Loged Out", "Successfully", true));
 		
 		
 		

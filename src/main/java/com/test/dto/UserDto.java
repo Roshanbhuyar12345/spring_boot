@@ -1,9 +1,13 @@
 package com.test.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 public class UserDto {
 	
 	private String username;
 	
+
 	private String password;
 
 	public UserDto() {

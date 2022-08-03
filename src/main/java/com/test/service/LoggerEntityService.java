@@ -33,10 +33,17 @@ public class LoggerEntityService {
 		
 		
 		this.loggerRepo.removeByToken(userToken);
-	   
-	    
 		
 	}
+	   
+	
+	public LoggerEntity createLogger(String token) {
+		LoggerEntity loggerEntity=this.loggerRepo.findByToken(token);		
+		return loggerEntity;
+		
+		
+	}
+	
 	
 
 }
