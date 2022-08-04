@@ -21,7 +21,7 @@ public class ProductDto {
 		this.name = name;
 		this.colour = colour;
 		this.price = price;
-	}
+	} 
 
 	public int getId() {
 		return id;

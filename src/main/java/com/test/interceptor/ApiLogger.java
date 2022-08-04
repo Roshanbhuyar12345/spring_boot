@@ -23,10 +23,10 @@ import com.test.service.LoggerEntityService;
 @Component
 public class ApiLogger implements HandlerInterceptor {
 
-	public ApiLogger() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+//	public ApiLogger() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
 
 	@Autowired
 	private ApiLoggerService apiLoggerService;
@@ -39,6 +39,7 @@ public class ApiLogger implements HandlerInterceptor {
 	public boolean preHandler(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		System.out.println("ApiLogger.preHandler()");
 		String[] arr = request.getRequestURI().split("/");
 		String getparam = arr[arr.length - 1];
 		String getparam2 = arr[arr.length - 2];
@@ -50,6 +51,7 @@ public class ApiLogger implements HandlerInterceptor {
 			final String requestTokenHeader = request.getHeader("Authorization").split(" ")[1];
 			LoggerEntity logDetail = this.loggerEntityService.createLogger(requestTokenHeader);
 
+			System.out.println("JIHASDAS" + logDetail);
 			if (logDetail == null) {
 
 				ErrorDetail error = new ErrorDetail(new Date(), "You are not login", "NotLoginUsr", true);
