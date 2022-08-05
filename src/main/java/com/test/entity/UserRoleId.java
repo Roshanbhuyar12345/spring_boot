@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Embeddable
 public class UserRoleId implements Serializable {
 	
-	@ManyToOne
+	@OneToMany
 	private User user;
 	
 	@ManyToOne
@@ -21,7 +22,7 @@ public class UserRoleId implements Serializable {
 	}
 
 	public UserRoleId() {
-		super();
+		super(); 
 		// TODO Auto-generated constructor stub
 	}
 

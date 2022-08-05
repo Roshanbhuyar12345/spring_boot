@@ -8,82 +8,126 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.Repository.RoleEntityRepo;
+import com.test.Repository.UserLoginRepo;
 import com.test.dto.RoleDto;
 import com.test.entity.RoleEntity;
+import com.test.entity.User;
 
 @Service
 public class RoleEntityService {
-	
+
 	@Autowired
 	private RoleEntityRepo roleEntityRepo;
 	
 	@Autowired
+	private UserLoginRepo userLoginRepo;
+	
+	
+
+	@Autowired
 	private ModelMapper modelMapper;
-	
-	
-	//adding role
+
+	// adding role
 	public RoleEntity addRole(RoleDto roleDto) {
-		
-		RoleEntity roleEntity=new RoleEntity();
-		
+
+		RoleEntity roleEntity = new RoleEntity();
+
 		roleEntity.setRoleName(roleDto.getRoleName());
-		
+
 		roleEntity.setDescription(roleDto.getDescription());
-		
+
 		return this.roleEntityRepo.save(roleEntity);
+
+	}
+
+	// read roles by id
+	public RoleDto getById(int id) {
+
+		Optional<RoleEntity> roleEntity = this.roleEntityRepo.findById(id);
+
+		return this.roleToRoledto(roleEntity);
+
+	}
+
+   //READ All User
+
+	public List<RoleEntity> getAllRole() {
+
+		List<RoleEntity> list = this.roleEntityRepo.findAll();
+
+		return list;
+
+	}
+	
+	//Update Role
+	
+	public RoleEntity updateRole(RoleEntity roleEntity,int id) {
+		
+	this.roleEntityRepo.findById(id);
+	
+	roleEntity.setRoleName(roleEntity.getRoleName());
+	roleEntity.setDescription(roleEntity.getDescription());
+	
+   RoleEntity roleEntity2=this.roleEntityRepo.save(roleEntity);
+	
+	return roleEntity2;
+	
 		
 	}
 	
 	
-	//read roles by id
-public RoleDto getById(int id) {
+	//delete Role
 	
-	Optional<RoleEntity> roleEntity=this.roleEntityRepo.findById(id);
+	public void deleteRole(int id) {
+		
+	this.roleEntityRepo.findById(id);
+		
+    this.roleEntityRepo.deleteById(id);
+    
+		
+	}
 	
-	return this.roleToRoledto(roleEntity);
 	
-}
-	
-//READ All User
+	//adding role to user
+	public void addRoleToUser(String username, String roleName) {
+		
+		User user = this.userLoginRepo.findByUsername(username);
+		System.out.println("user>>"+username);
+		
+		RoleEntity role = roleEntityRepo.findByRoleName(roleName);
+		System.out.println("role>>"+role);
+		
 
-public List<RoleEntity> getAllRole(){
+	
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	List<RoleEntity> list=this.roleEntityRepo.findAll();
-	
-	return list;
-	
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//roleEntity to roledto
-	
+	// roleEntity to roledto
+
 	public RoleDto roleToRoledto(Optional<RoleEntity> roleEntity) {
-		
-		RoleDto roleDto=this.modelMapper.map(roleEntity, RoleDto.class);
-		
+
+		RoleDto roleDto = this.modelMapper.map(roleEntity, RoleDto.class);
+
 		return roleDto;
-		
+
 	}
-	
-	//RoleDto to RoleEntity
+
+	// RoleDto to RoleEntity
 	public RoleEntity roleDtoToRoleEntiry(RoleDto roleDto) {
-		RoleEntity roleEntity=this.modelMapper.map(roleDto, RoleEntity.class);
-		
+		RoleEntity roleEntity = this.modelMapper.map(roleDto, RoleEntity.class);
+
 		return roleEntity;
 	}
-	
 
 }

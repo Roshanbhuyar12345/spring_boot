@@ -14,12 +14,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 
 
 @Entity
 @Table(name = "roles")
+@Where(clause = "is_active=true")
+@SQLDelete(sql = "UPDATE roles SET is_active=false WHERE id=?")
 public class RoleEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

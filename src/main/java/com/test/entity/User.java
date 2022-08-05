@@ -4,12 +4,16 @@ package com.test.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,16 +49,20 @@ public class User  {
 	@Column(name = "is_active")
 	private boolean isActive=true;
 	
-	
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "uri.role")
+	private List<UserRoleEntity> userRole;
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	public User(int id, String username, String password, Date createdBy, Date updatedBy, boolean isActive) {
+
+
+
+	public User(int id, String username, String password, Date createdBy, Date updatedBy, boolean isActive,
+			List<UserRoleEntity> userRole) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -62,7 +70,27 @@ public class User  {
 		this.createdBy = createdBy;
 		this.updatedBy = updatedBy;
 		this.isActive = isActive;
+		this.userRole = userRole;
 	}
+
+
+
+
+
+
+	public List<UserRoleEntity> getUserRole() {
+		return userRole;
+	}
+
+
+
+
+
+	public void setUserRole(List<UserRoleEntity> userRole) {
+		this.userRole = userRole;
+	}
+
+
 
 
 
