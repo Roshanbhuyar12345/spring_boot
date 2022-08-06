@@ -2,8 +2,14 @@ package com.test.entity;
 
 import java.util.Date;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,22 +17,25 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "user_role")
+//@AssociationOverrides({ @AssociationOverride(name = "uri.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "uri.role", joinColumns = @JoinColumn(name = "role_id")) })
 public class UserRoleEntity {
 	
-	@EmbeddedId
+	
+	
+	
+	
+	public UserRoleEntity(Object object) {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	private UserRoleId uri=new UserRoleId();
-	
-	 private boolean isActive=true;
-	 
-	 @CreationTimestamp
-	 private Date createdAt;
-	
-	 
-	 @UpdateTimestamp
-	 private Date updatedAt;
 
-
-	public UserRoleId getUri() {
+	private boolean isActive=true;
+	 
+	@EmbeddedId
+	 public UserRoleId getUri() {
 		return uri;
 	}
 
@@ -35,6 +44,13 @@ public class UserRoleEntity {
 		this.uri = uri;
 	}
 
+
+	@CreationTimestamp
+	 private Date createdAt;
+	
+	 
+	 @UpdateTimestamp
+	 private Date updatedAt;
 
 	public boolean isActive() {
 		return isActive;

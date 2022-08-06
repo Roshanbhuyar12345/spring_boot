@@ -12,8 +12,5 @@ public interface LoggerRepo extends JpaRepository<LoggerEntity, Integer> {
 	
 	void removeByToken(String token);
 	
-	
-	
-
 
 }

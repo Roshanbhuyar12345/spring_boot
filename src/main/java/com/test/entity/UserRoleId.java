@@ -8,11 +8,14 @@ import javax.persistence.OneToMany;
 
 @Embeddable
 public class UserRoleId implements Serializable {
-	
-	@OneToMany
+	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private User user;
 	
-	@ManyToOne
 	private RoleEntity role;
 
 	public UserRoleId(User user, RoleEntity role) {
@@ -26,6 +29,7 @@ public class UserRoleId implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	@ManyToOne
 	public User getUser() {
 		return user;
 	}
@@ -34,6 +38,7 @@ public class UserRoleId implements Serializable {
 		this.user = user;
 	}
 
+	@ManyToOne
 	public RoleEntity getRole() {
 		return role;
 	}

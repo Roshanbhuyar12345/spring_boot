@@ -49,9 +49,9 @@ public class User  {
 	@Column(name = "is_active")
 	private boolean isActive=true;
 	
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "uri.role")
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "uri.user")
 	private List<UserRoleEntity> userRole;
-
+ 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -73,39 +73,22 @@ public class User  {
 		this.userRole = userRole;
 	}
 
-
-
-
-
-
 	public List<UserRoleEntity> getUserRole() {
 		return userRole;
 	}
-
-
-
-
 
 	public void setUserRole(List<UserRoleEntity> userRole) {
 		this.userRole = userRole;
 	}
 
-
-
-
-
 	public Date getCreatedBy() {
 		return createdBy;
 	}
 
-
-
 	public void setCreatedBy(Date createdBy) {
 		this.createdBy = createdBy;
 	}
-
-
-
+	
 	public Date getUpdatedBy() {
 		return updatedBy;
 	}

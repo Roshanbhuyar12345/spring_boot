@@ -29,6 +29,7 @@ public class RoleEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	
 	private String roleName;
 	
 	private String description;

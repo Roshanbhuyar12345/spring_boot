@@ -12,5 +12,5 @@ public interface RoleEntityRepo extends JpaRepository<RoleEntity,Integer > {
 
    RoleEntity findByRoleName(String roleName);
 	
-	
+   RoleEntity findByRoleName(RoleEntity roleName);
 }
