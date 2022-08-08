@@ -26,7 +26,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE roles SET is_active=false WHERE id=?")
 public class RoleEntity implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	

@@ -12,4 +12,6 @@ public interface UserLoginRepo extends JpaRepository<User, Integer>{
 	
 	public User findByUsername(User userName);
 	
+	 
+	
 }

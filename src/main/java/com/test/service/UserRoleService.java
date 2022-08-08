@@ -2,6 +2,7 @@ package com.test.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.test.Repository.RoleEntityRepo;
 import com.test.Repository.UserLoginRepo;
 import com.test.Repository.UserRoleEntityRepo;
+import com.test.dto.UserRole123Dto;
 import com.test.entity.RoleEntity;
 import com.test.entity.User;
 import com.test.entity.UserRoleEntity;
@@ -27,29 +29,34 @@ public class UserRoleService {
 	private RoleEntityRepo roleEntityRepo;
 	
 	//Post UserRole
-	public UserRoleEntity addRole(User user, RoleEntity role) {
+	public UserRoleEntity addRole( UserRole123Dto dto) {
+	
 		
-		User user1=this.userLoginRepo.findByUsername(user);
+//		User user= new User();
 		
-		RoleEntity roleEntity=this.roleEntityRepo.findByRoleName(role);			
-			
-//		UserRoleEntity  userRoleEntity=   this.userRoleEntityRepo.findByOrderByAddRoles(user1, roleEntity);
+		User user1=this.userLoginRepo.findByUsername(dto.getUser());
+		System.out.println("USER " +user1.getId());
 		
-//		UserRoleEntity roleEntities= this.userRoleEntityRepo.save(userRoleEntity);
+//		RoleEntity role=new RoleEntity();
 		
-		UserRoleId newUserRoleEntity = new UserRoleId();
-		
-		newUserRoleEntity.setUser(user1);
-		
-		newUserRoleEntity.setRole(roleEntity);
-		
-		UserRoleEntity userRoleEntity=new UserRoleEntity(newUserRoleEntity);
+		RoleEntity roleEntity=this.roleEntityRepo.findByRoleName(dto.getRole());		
+		System.out.println("ROLE " + roleEntity.getId());
 		
 		
+	
+		UserRoleId newUserRoleEntity = new UserRoleId(user1, roleEntity);
+//		
+//		newUserRoleEntity.setUser(user1);
+//		 
+//		newUserRoleEntity.setRole(roleEntity);
 		
-		userRoleEntityRepo.save(userRoleEntity);
+		UserRoleEntity abc = new UserRoleEntity();
 		
-		return userRoleEntity;
+	//	abc.setUri(newUserRoleEntity);
+	
+   	//userRoleEntityRepo.save(abc);
+		
+		return abc;
 				
 	}
 	

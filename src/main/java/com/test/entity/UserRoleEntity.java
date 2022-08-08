@@ -17,14 +17,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "user_role")
-//@AssociationOverrides({ @AssociationOverride(name = "uri.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "uri.role", joinColumns = @JoinColumn(name = "role_id")) })
+@AssociationOverrides({ @AssociationOverride(name = "uri.user_login_detail", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "uri.roles", joinColumns = @JoinColumn(name = "role_id")) })
 public class UserRoleEntity {
 	
 	
-	
-	
-	
-	public UserRoleEntity(Object object) {
+	 
+	public UserRoleEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -80,7 +78,14 @@ public class UserRoleEntity {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	 
+
+
+	@Override
+	public String toString() {
+		return "UserRoleEntity [uri=" + uri + ", isActive=" + isActive + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
+	}
+		
 	 
 
 }
