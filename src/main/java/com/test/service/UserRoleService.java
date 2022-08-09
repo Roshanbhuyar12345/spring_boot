@@ -35,28 +35,26 @@ public class UserRoleService {
 //		User user= new User();
 		
 		User user1=this.userLoginRepo.findByUsername(dto.getUser());
+		
 		System.out.println("USER " +user1.getId());
 		
 //		RoleEntity role=new RoleEntity();
 		
 		RoleEntity roleEntity=this.roleEntityRepo.findByRoleName(dto.getRole());		
+		
 		System.out.println("ROLE " + roleEntity.getId());
 		
 		
+	    UserRoleId newUserRoleEntity = new UserRoleId(user1, roleEntity);
+
+		
+     	UserRoleEntity userRoleEntity = new UserRoleEntity();
+		
+	     userRoleEntity.setUri(newUserRoleEntity);
 	
-		UserRoleId newUserRoleEntity = new UserRoleId(user1, roleEntity);
-//		
-//		newUserRoleEntity.setUser(user1);
-//		 
-//		newUserRoleEntity.setRole(roleEntity);
+         userRoleEntityRepo.save(userRoleEntity);
 		
-		UserRoleEntity abc = new UserRoleEntity();
-		
-	//	abc.setUri(newUserRoleEntity);
-	
-   	//userRoleEntityRepo.save(abc);
-		
-		return abc;
+		return userRoleEntity;
 				
 	}
 	
