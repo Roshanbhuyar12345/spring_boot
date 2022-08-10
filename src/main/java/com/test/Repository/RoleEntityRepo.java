@@ -10,7 +10,8 @@ import com.test.entity.RoleEntity;
 @Repository
 public interface RoleEntityRepo extends JpaRepository<RoleEntity,Integer > {
 
-	//@Query(  value = "SELECT * FROM roles WHERE role_name=?",nativeQuery = true)
+	
+ 
    RoleEntity findByRoleName(String roleName);
 	
 //   RoleEntity findByRoleName(RoleEntity roleName);

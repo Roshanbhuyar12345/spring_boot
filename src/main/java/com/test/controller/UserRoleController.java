@@ -1,38 +1,59 @@
 package com.test.controller;
 
+ 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.dto.UserRole123Dto;
-import com.test.entity.RoleEntity;
-import com.test.entity.User;
 import com.test.entity.UserRoleEntity;
 import com.test.service.UserRoleService;
 
-@RestController
+@RestController  
 public class UserRoleController {
 
 	@Autowired
 	private UserRoleService userRoleService;
-	
-	
-//	@PostMapping(value = "/assignRole", consumes = MediaType.APPLICATION_JSON_VALUE)
-//	@RequestMapping(produces = { MediaType.APPLICATION_JSON_VALUE }, method = RequestMethod.POST , consumes = MediaType.APPLICATION_JSON_VALUE,path = "/assignRole")
- 	@PostMapping(value = "/assignRole", consumes = {"application/json"})
-	public ResponseEntity<UserRoleEntity> assignRole(@RequestBody UserRole123Dto dto){
+
+	@PostMapping(value = "/assignRole", consumes = { "application/json" })
+	public ResponseEntity<?> assignRole(@RequestBody UserRole123Dto dto) throws Exception 
+	{
+
+		try 
+		{
+		this.userRoleService.addRole(dto);
+
+		return ResponseEntity.ok("Role Assign Sucessfuly");
 		
-		UserRoleEntity roleEntity=	this.userRoleService.addRole(dto);
+		}
+		catch(Exception e) 
+		{
+			return ResponseEntity.ok("Sorry !! User or Role May Not Found , Try Again");
+		}
 		
-		return new ResponseEntity<>(roleEntity, HttpStatus.CREATED);
 	}
+
+	
+	@GetMapping("/GetAllRoles")
+	public ResponseEntity<?> getAllRoles(UserRoleEntity entity){
+		
+	 List<UserRoleEntity> entities=	 this.userRoleService.getAll();
+		
+		return new ResponseEntity<>("hey sanket",HttpStatus.ACCEPTED);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

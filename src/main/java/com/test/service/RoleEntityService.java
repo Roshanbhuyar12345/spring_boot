@@ -102,16 +102,6 @@ public class RoleEntityService {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	// roleEntity to roledto
 
