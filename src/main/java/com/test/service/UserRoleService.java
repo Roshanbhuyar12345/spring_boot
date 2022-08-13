@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import com.test.Repository.RoleEntityRepo;
 import com.test.Repository.UserLoginRepo;
 import com.test.Repository.UserRoleEntityRepo;
+import com.test.dto.UserDto;
 import com.test.dto.UserRole123Dto;
 import com.test.entity.RoleEntity;
 import com.test.entity.User;
 import com.test.entity.UserRoleEntity;
 import com.test.entity.UserRoleId;
+import com.test.exception.ResourceNotFoundException;
 
 @Service
 public class UserRoleService {
@@ -45,14 +47,31 @@ public class UserRoleService {
 	}
 	
 	
-	//get all user role
-	public List<UserRoleEntity> getAll(){
-		
-	List<UserRoleEntity> entity=this.userRoleEntityRepo.findAll();
+ 
 	
-	System.out.println(entity);
+	
+	//update the role
+	public void updateRole(UserRole123Dto dto) {
+
+		User user = this.userLoginRepo.findByUsername(dto.getUser());
+      
+		RoleEntity roleEntity = this.roleEntityRepo.findByRoleName(dto.getRole());
+
+ 
+		UserRoleId userRoleId = new UserRoleId();
+
+		userRoleId.setUser(user);
+		userRoleId.setRole(roleEntity);
+
+		UserRoleEntity entity = new UserRoleEntity();
+
+		entity.setUri(userRoleId);
 		
-	return entity;
+
+		this.userRoleEntityRepo.save(entity);
+
+		 
+		 
 	}
 	
 	
@@ -60,10 +79,30 @@ public class UserRoleService {
 	
 	
 	
-	
-	
-	
-	
+
+	//delete the role
+	public void deleteRole(UserRole123Dto dto) {
+
+		User user = this.userLoginRepo.findByUsername(dto.getUser());
+    
+		System.out.println(user.getId());
+		 
+		RoleEntity roleEntity = this.roleEntityRepo.findByRoleName(dto.getRole());
+
+		System.out.println(roleEntity.getId());
+ 
+		UserRoleId userRoleId = new UserRoleId(user, roleEntity);
+
+		 
+		UserRoleEntity entity = new UserRoleEntity();
+
+		entity.setUri(userRoleId);
+		
+
+		this.userRoleEntityRepo.delete(entity);
+
+		 
+	}
 	
 	
 	

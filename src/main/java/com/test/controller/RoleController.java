@@ -54,7 +54,7 @@ public class RoleController {
 		
 		RoleEntity entity= this.roleEntityService.updateRole(roleEntity, id);
 		
-		return new ResponseEntity<>("Sucessfully updated ",HttpStatus.UPGRADE_REQUIRED);
+		return new ResponseEntity<>("Sucessfully updated ",HttpStatus.ACCEPTED);
 		
 		
 	}

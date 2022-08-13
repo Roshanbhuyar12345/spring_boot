@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,14 +43,47 @@ public class UserRoleController {
 	}
 
 	
-	@GetMapping("/GetAllRoles")
-	public ResponseEntity<?> getAllRoles(UserRoleEntity entity){
+ 
+	
+	@PutMapping("/updateRole")
+	public ResponseEntity<?> update(@RequestBody UserRole123Dto dto){
 		
-	 List<UserRoleEntity> entities=	 this.userRoleService.getAll();
+		this.userRoleService.updateRole(dto);
 		
-		return new ResponseEntity<>("hey sanket",HttpStatus.ACCEPTED);
+		return new ResponseEntity<>("updated !!",HttpStatus.ACCEPTED);
+	}
+	
+	
+	
+	
+	
+	@DeleteMapping("/deleteRole")
+	
+	public ResponseEntity<?> deleteUserRole(@RequestBody UserRole123Dto dto ){
+		
+		this.userRoleService.deleteRole(dto);
+		
+		return ResponseEntity.ok(dto);
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
