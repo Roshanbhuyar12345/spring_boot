@@ -13,10 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.test.Repository.ProductRepo;
 import com.test.dto.ProductDto;
 import com.test.entity.Product;
 import com.test.exception.ResourceNotFoundException;
+import com.test.repository.ProductRepo;
 import com.test.utility.Pegination;
 
 @Service

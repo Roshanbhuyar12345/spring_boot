@@ -3,10 +3,10 @@ package com.test.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.Repository.LoggerRepo;
 import com.test.dto.LoggerDto;
 import com.test.entity.LoggerEntity;
 import com.test.entity.User;
+import com.test.repository.LoggerRepo;
 
 @Service
 public class LoggerEntityService {

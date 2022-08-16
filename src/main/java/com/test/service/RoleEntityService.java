@@ -7,11 +7,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.Repository.RoleEntityRepo;
-import com.test.Repository.UserLoginRepo;
 import com.test.dto.RoleDto;
 import com.test.entity.RoleEntity;
 import com.test.entity.User;
+import com.test.repository.RoleEntityRepo;
+import com.test.repository.UserLoginRepo;
 
 @Service
 public class RoleEntityService {

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.Repository.UserLoginRepo;
 import com.test.confi.jwtTokenUtil;
 import com.test.dto.LoggerDto;
 import com.test.dto.SuccessResponce;
@@ -31,6 +30,7 @@ import com.test.entity.JwtRequest;
 import com.test.entity.JwtResponce;
 import com.test.entity.User;
 import com.test.exception.ErrorDetail;
+import com.test.repository.UserLoginRepo;
 import com.test.service.JwtUserDetailsService;
 import com.test.service.LoggerEntityService;
 

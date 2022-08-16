@@ -47,6 +47,7 @@ public class RoleEntity implements Serializable {
 	private Date updatedAt;
 	
  	 @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "uri.role")
+ 	 @JsonIgnore
 	private List<UserRoleEntity> userRoles;
 
 	public RoleEntity() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.dto.SuccessResponce;
 import com.test.dto.UserRole123Dto;
 import com.test.entity.UserRoleEntity;
 import com.test.service.UserRoleService;
@@ -63,13 +64,19 @@ public class UserRoleController {
 		
 		this.userRoleService.deleteRole(dto);
 		
-		return ResponseEntity.ok(dto);
+		return ResponseEntity.ok("Delete SUccefully");
 		
 	}
 	
 	
-	
-	
+	@GetMapping("/AllUserRole")
+	public ResponseEntity<?> getAllUserRole(){
+		
+	List<UserRoleEntity> list=	this.userRoleService.getAllUserRole();
+		
+		return ResponseEntity.ok(new SuccessResponce("All User Roles","User_Role", list));
+		
+	}
 	
 	
 	

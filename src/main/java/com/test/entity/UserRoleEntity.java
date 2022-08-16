@@ -16,10 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
  
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "user_role")
+@Where(clause = "active=true")
+
 @AssociationOverrides({ @AssociationOverride(name = "uri.user_login_detail", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "uri.roles", joinColumns = @JoinColumn(name = "role_id")) })
 public class UserRoleEntity {
 	
@@ -30,7 +34,7 @@ public class UserRoleEntity {
 	 private Date updatedAt;
 	 
 	 
-	 @Column(name = "is_Active")
+	 @Column(name = "is_active")
 	 private boolean isActive=true;
 	 
 	 

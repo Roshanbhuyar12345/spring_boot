@@ -3,8 +3,8 @@ package com.test.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.test.Repository.ApiLoggerRepo;
 import com.test.entity.ApiLoggerEntity;
+import com.test.repository.ApiLoggerRepo;
 
 @Service
 public class ApiLoggerService {

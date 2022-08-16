@@ -1,4 +1,4 @@
- package com.test.Repository;
+ package com.test.repository;
 
 import java.util.Optional;
 

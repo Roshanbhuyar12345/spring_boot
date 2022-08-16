@@ -21,6 +21,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "User_login_detail")
 public class User  {
@@ -50,6 +52,7 @@ public class User  {
 	private boolean isActive=true;
 	
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "uri.user")
+	@JsonIgnore
 	private List<UserRoleEntity> userRole;
  
 	public User() {
