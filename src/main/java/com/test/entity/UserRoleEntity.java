@@ -23,7 +23,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "user_role")
 @Where(clause = "active=true")
-
+@SQLDelete(sql = "UPDATE user_role u SET active=false WHERE u.role_id=? AND  u.user_id=?")
 @AssociationOverrides({ @AssociationOverride(name = "uri.user_login_detail", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "uri.roles", joinColumns = @JoinColumn(name = "role_id")) })
 public class UserRoleEntity {
 	
