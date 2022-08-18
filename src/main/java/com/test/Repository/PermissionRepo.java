@@ -7,5 +7,7 @@ import com.test.entity.PermissionEntity;
 
 @Repository
 public interface PermissionRepo extends JpaRepository<PermissionEntity, Integer>{
+	
+	public PermissionEntity findByactionName(String actionName);
 
 }

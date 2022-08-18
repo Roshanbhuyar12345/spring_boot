@@ -14,9 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "permissions")
+@Where(clause = "is_active=true")
+@SQLDelete(sql = "UPDATE permissions SET is_active=false WHERE id=?")
 public class PermissionEntity implements Serializable {
 
 	/**
@@ -40,10 +44,6 @@ public class PermissionEntity implements Serializable {
 	@Column(name = "base_url")
 	private String baseUrl;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "role_id")
-	private RoleEntity roleId;
-	
 	@Column(name = "path")
 	private String path;
 	
@@ -61,14 +61,13 @@ public class PermissionEntity implements Serializable {
 	 
 
 	public PermissionEntity(int id, String actionName, String description, String method, String baseUrl,
-			RoleEntity roleId, String path, boolean isActive, Date createdAt, Date updatedAt) {
+			 String path, boolean isActive, Date createdAt, Date updatedAt) {
 		super();
 		this.id = id;
 		this.actionName = actionName;
 		this.description = description;
 		this.method = method;
 		this.baseUrl = baseUrl;
-		this.roleId = roleId;
 		this.path = path;
 		this.isActive = isActive;
 		this.createdAt = createdAt;
@@ -117,16 +116,6 @@ public class PermissionEntity implements Serializable {
 
 	public void setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
-	}
-
- 
-
-	public RoleEntity getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(RoleEntity roleId) {
-		this.roleId = roleId;
 	}
 
 	public String getPath() {
