@@ -4,6 +4,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,9 @@ public class JwtUserDetailsService implements UserDetailsService{
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private RoleEntityService roleService;
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	
@@ -33,7 +37,7 @@ public class JwtUserDetailsService implements UserDetailsService{
 		}
 		
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				new ArrayList<>());
+				getAuthority(user));
 	}
 	//for compaire password
 	public Boolean comparePassword(String password, String hashPassword) {
@@ -50,6 +54,26 @@ public class JwtUserDetailsService implements UserDetailsService{
 		return userLoginRepo.save(ulogin);
 		
 	}
-//
+	private ArrayList<SimpleGrantedAuthority> getAuthority(User user) {
+
+		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+		if(user.getId() +"permission" !=null) {
+
+			ArrayList<SimpleGrantedAuthority> authorities1 = new ArrayList<>();
+		
+			ArrayList<String> permissions = roleService.getPermissionByUserId(user.getId());
+			
+			
+			permissions.forEach(permission -> {authorities1.add(new SimpleGrantedAuthority("ROLE_" + permission));
+
+		
+ 
+		} );
+		}
+		return authorities;
+
+	}
+
 
 }

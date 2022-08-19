@@ -1,5 +1,6 @@
 package com.test.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,22 +8,32 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.dto.IPermissionIdList;
 import com.test.dto.RoleDto;
+import com.test.dto.RoleIdListDto;
 import com.test.entity.RoleEntity;
+import com.test.entity.RolePermissionEntity;
 import com.test.entity.User;
+import com.test.entity.UserRoleEntity;
 import com.test.repository.RoleEntityRepo;
+import com.test.repository.RolePermissionEntityRepo;
 import com.test.repository.UserLoginRepo;
+import com.test.repository.UserRoleEntityRepo;
 
 @Service
 public class RoleEntityService {
 
 	@Autowired
 	private RoleEntityRepo roleEntityRepo;
-	
+
 	@Autowired
 	private UserLoginRepo userLoginRepo;
 	
-	
+	@Autowired
+	private UserRoleEntityRepo userRoleEntityRepo;
+
+	@Autowired
+	private RolePermissionEntityRepo rolePermissionEntityRepo;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -49,7 +60,7 @@ public class RoleEntityService {
 
 	}
 
-   //READ All User
+	// READ All User
 
 	public List<RoleEntity> getAllRole() {
 
@@ -58,51 +69,79 @@ public class RoleEntityService {
 		return list;
 
 	}
-	
-	//Update Role
-	
-	public RoleEntity updateRole(RoleEntity roleEntity,int id) {
-		
-	this.roleEntityRepo.findById(id);
-	
-	roleEntity.setRoleName(roleEntity.getRoleName());
-	roleEntity.setDescription(roleEntity.getDescription());
-	
-   RoleEntity roleEntity2=this.roleEntityRepo.save(roleEntity);
-	
-	return roleEntity2;
-	
-		
+
+	// Update Role
+
+	public RoleEntity updateRole(RoleEntity roleEntity, int id) {
+
+		this.roleEntityRepo.findById(id);
+
+		roleEntity.setRoleName(roleEntity.getRoleName());
+		roleEntity.setDescription(roleEntity.getDescription());
+
+		RoleEntity roleEntity2 = this.roleEntityRepo.save(roleEntity);
+
+		return roleEntity2;
+
 	}
-	
-	
-	//delete Role
-	
+
+	// delete Role
+
 	public void deleteRole(int id) {
-		
-	this.roleEntityRepo.findById(id);
-		
-    this.roleEntityRepo.deleteById(id);
-    
-		
+
+		this.roleEntityRepo.findById(id);
+
+		this.roleEntityRepo.deleteById(id);
+
 	}
-	
-	
-	//adding role to user
+
+	// adding role to user
 	public void addRoleToUser(String username, String roleName) {
-		
-		User user = this.userLoginRepo.findByUsername(username);
-		System.out.println("user>>"+username);
-		
-		RoleEntity role = roleEntityRepo.findByRoleName(roleName);
-		System.out.println("role>>"+role);
-		
 
-	
+		User user = this.userLoginRepo.findByUsername(username);
+		System.out.println("user>>" + username);
+
+		RoleEntity role = roleEntityRepo.findByRoleName(roleName);
+		System.out.println("role>>" + role);
+
+	}
+
+	public ArrayList<String> getPermissionByUserId(Integer id){
+		
+		ArrayList<RoleIdListDto> roleId=this.userRoleEntityRepo.findByUriUserId(id, RoleIdListDto.class);
+		System.out.println(roleId);
+		ArrayList<Integer> roles=new ArrayList<Integer>();
+		
+		for(int i=0;i< roleId.size();i++) {
+			
+			roles.add(roleId.get(i).getUriUserId());
+		}
+		System.out.println(roles);
+
+		List<IPermissionIdList> entities=this.rolePermissionEntityRepo.findPkPermissionByPkRoleIdIn(roles, IPermissionIdList.class);
+		System.out.println(entities);
+		ArrayList<String> permission=new ArrayList<String>();
+		
+		for(IPermissionIdList list:entities) {
+			permission.add(list.getPkPermissionActionName());
+		}
+		System.out.println("sss"+permission);
+		return permission;
 		
 	}
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// roleEntity to roledto
 
 	public RoleDto roleToRoledto(Optional<RoleEntity> roleEntity) {

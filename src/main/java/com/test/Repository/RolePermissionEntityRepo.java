@@ -1,5 +1,7 @@
 package com.test.repository;
 
+import java.util.ArrayList;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,11 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.test.dto.IPermissionIdList;
 import com.test.entity.RolePermissionEntity;
 
 @Repository
 public interface RolePermissionEntityRepo extends JpaRepository<RolePermissionEntity, Integer>{
 
+	ArrayList<IPermissionIdList> findPkPermissionByPkRoleIdIn(ArrayList<Integer> roleIds,Class<IPermissionIdList> IpermisiionList);
+	
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query(value = "UPDATE role_permission u SET permission_id=:permission_id WHERE u.role_id=:role_id",nativeQuery = true)
