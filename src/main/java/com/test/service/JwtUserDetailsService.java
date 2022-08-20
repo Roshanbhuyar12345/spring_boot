@@ -59,18 +59,18 @@ public class JwtUserDetailsService implements UserDetailsService{
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
 		if(user.getId() +"permission" !=null) {
-
-			ArrayList<SimpleGrantedAuthority> authorities1 = new ArrayList<>();
 		
 			ArrayList<String> permissions = roleService.getPermissionByUserId(user.getId());
+
+			System.out.println("PERMISSIONS" + permissions);
 			
-			
-			permissions.forEach(permission -> {authorities1.add(new SimpleGrantedAuthority("ROLE_" + permission));
+			permissions.forEach(permission -> {authorities.add(new SimpleGrantedAuthority("ROLE_" + permission));
 
 		
  
 		} );
 		}
+		System.out.println("PERMISSIONS" + authorities);
 		return authorities;
 
 	}

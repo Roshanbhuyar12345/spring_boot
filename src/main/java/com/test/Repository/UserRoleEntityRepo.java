@@ -19,8 +19,8 @@ import com.test.entity.*;
 @Repository
 public interface UserRoleEntityRepo extends JpaRepository<UserRoleEntity, Integer>{
 
-	
-	ArrayList<RoleIdListDto> findByUriUserId(int userId,Class<RoleIdListDto> roleDto );
+	@Query(value = "SELECT * FROM user_role u WHERE u.user_id=:user_id",nativeQuery = true)
+	ArrayList<UserRoleEntity> getRolesOfUser(@Param("user_id") int userId);
 
 	@Transactional
 	@Modifying(clearAutomatically = true)

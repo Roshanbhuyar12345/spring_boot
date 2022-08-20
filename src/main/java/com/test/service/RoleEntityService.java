@@ -12,8 +12,7 @@ import com.test.dto.IPermissionIdList;
 import com.test.dto.RoleDto;
 import com.test.dto.RoleIdListDto;
 import com.test.entity.RoleEntity;
-import com.test.entity.RolePermissionEntity;
-import com.test.entity.User;
+ import com.test.entity.User;
 import com.test.entity.UserRoleEntity;
 import com.test.repository.RoleEntityRepo;
 import com.test.repository.RolePermissionEntityRepo;
@@ -105,43 +104,31 @@ public class RoleEntityService {
 		System.out.println("role>>" + role);
 
 	}
-
+//geting permission by userId
 	public ArrayList<String> getPermissionByUserId(Integer id){
 		
-		ArrayList<RoleIdListDto> roleId=this.userRoleEntityRepo.findByUriUserId(id, RoleIdListDto.class);
-		System.out.println(roleId);
+		ArrayList<UserRoleEntity> roleId=this.userRoleEntityRepo.getRolesOfUser(id);
+		
 		ArrayList<Integer> roles=new ArrayList<Integer>();
 		
 		for(int i=0;i< roleId.size();i++) {
 			
-			roles.add(roleId.get(i).getUriUserId());
+			roles.add(roleId.get(i).getUri().getRole().getId());
 		}
-		System.out.println(roles);
 
 		List<IPermissionIdList> entities=this.rolePermissionEntityRepo.findPkPermissionByPkRoleIdIn(roles, IPermissionIdList.class);
-		System.out.println(entities);
+
 		ArrayList<String> permission=new ArrayList<String>();
 		
 		for(IPermissionIdList list:entities) {
 			permission.add(list.getPkPermissionActionName());
 		}
-		System.out.println("sss"+permission);
+
 		return permission;
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// roleEntity to roledto
 
 	public RoleDto roleToRoledto(Optional<RoleEntity> roleEntity) {

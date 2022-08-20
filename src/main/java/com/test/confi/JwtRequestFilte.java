@@ -59,7 +59,7 @@ public class JwtRequestFilte extends OncePerRequestFilter {
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.detailsService.loadUserByUsername(username);
-
+			System.out.println("GET PERMI" + userDetails.getAuthorities());
 			// if token is valid configure Spring Security to manually set
 			// authentication
 			if (jwttokenUtil.validateToken(jwtToken, userDetails)) {
